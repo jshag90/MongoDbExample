@@ -1,28 +1,58 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
 <html>
 <head>
-	<title>Home</title>
+<title>Home</title>
 </head>
 <body>
-<form id="car_form" action="./insert_car">
-	브랜드 : <input name = "brand"></input><br/>
-	모델 : <input name = "model"></input><br/>
-	<button type="submit">저장하기</button>
-</form>
-<form  action="./delete_all_car">
-	<button type="submit">모두삭제</button>
-</form>
+	<form id="car_form" action="./insert_car">
+		<table>
+			<tbody>
+				<tr>
+					<td>브랜드 :</td>
+					<td><input name="brand"></input></td>
+				</tr>
+				<tr>
+					<td>모델 :</td>
+					<td><input name="model"></input></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><button type="submit">저장하기</button></td>
+				</tr>
+			</tbody>
+		</table>
 
-	=Collection 데이터 조회<br/>
-<%-- 	IDS : ${IDS}<br/> --%>
-<%-- 	BRANDS : ${BRANDS}<br/> --%>
-<%-- 	MODELS : ${MODELS}  --%>
+	</form>
+	
+	<form action="./delete_all_car"><button type="submit">모두삭제</button></form>
+	
+	<br />
 
-<c:forEach var="car" items="${CARS}" varStatus="status">     
-<a href="./findOneData?brand=${car.brand}&model=${car.model}&id=${car.id}">${car.id}|${car.brand}|${car.model}</a></br>
-</c:forEach>
+	<table>
+		<thead>
+			<tr>
+				<th>_id</th>
+				<th>브랜드</th>
+				<th>모델</th>
+			</tr>
+		<thead>
+		<tbody>
+			<c:forEach var="car" items="${CARS}" varStatus="status">
+				<tr>
+					<td>${car.id}</td>
+					<td>${car.brand}</td>
+					<td>${car.model}</td>
+					<td><a href="./findOneCarData?id=${car.id}">수정</a></td>
+					<td><a href="./delete_car?brand=${car.brand}&model=${car.model}">삭제</a></td>
+				</tr>
+			</c:forEach>
+
+		</tbody>
+
+	</table>
 
 </body>
 </html>

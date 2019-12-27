@@ -1,6 +1,5 @@
 package com.secuve.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,13 +23,7 @@ public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	private CarService initCarService() {
-		AbstractApplicationContext context = new AnnotationConfigApplicationContext(MongoDbConfig.class);
-		CarService carService = (CarService) context.getBean("carService");
-		return carService;
-	}
-
-	//모두삭제
+	// 모두삭제
 	@RequestMapping(value = "/delete_all_car", method = RequestMethod.GET)
 	public String allDelete(HttpServletRequest req, Model model) {
 		String page = "";
@@ -39,14 +32,14 @@ public class HomeController {
 			page = "redirect:/";
 		} catch (Exception e) {
 			model.addAttribute("msg", "삭제에 실패하였습니다.");
-			page = "fail";
+			page = "msg";
 		}
 
 		return page;
 
 	}
 
-	//추가
+	// 추가
 	@RequestMapping(value = "/insert_car", method = RequestMethod.GET)
 	public String saveCar(HttpServletRequest req, Model model) {
 
@@ -68,51 +61,76 @@ public class HomeController {
 		return page;
 	}
 
-	//전체조회
+	// 전체조회
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 
 		List<Car> cars = initCarService().findAll();
-		List<String> brandList = new ArrayList<String>();
-		List<String> modelList = new ArrayList<String>();
-		List<String> dataIds = new ArrayList<String>();
-
-		for (Car car : cars) {
-
-			brandList.add(car.getBrand());
-			modelList.add(car.getModel());
-			dataIds.add(car.getId());
-
-		}
-
 		model.addAttribute("CARS", cars);
-		model.addAttribute("IDS", dataIds);
-		model.addAttribute("BRANDS", brandList);
-		model.addAttribute("MODELS", modelList);
 		return "home";
 
 	}
-	
-	//하나만 조회
-	@RequestMapping(value = "/findOneData", method = RequestMethod.GET)
-	public String updateCar(HttpServletRequest req, Model model) {
 
-		String getId = req.getParameter("id");
-		String brand = req.getParameter("brand");
-		String modelName = req.getParameter("model");
-		
-		Car insertData = new Car(brand, modelName);
-		insertData.setId(getId);
-		
-		
-		Car getData = initCarService().find(insertData);
-		System.out.println(getData.getModel().toString());
-		
+	// 하나만 조회
+	@RequestMapping(value = "/findOneCarData", method = RequestMethod.GET)
+	public String findOneCarData(HttpServletRequest req, Model model) {
+
+		try {
+
+			Car getData = initCarService().find(req);
+			model.addAttribute("CAR", getData);
+		} catch (Exception e) {
+
+		}
 
 		return "updateform";
 
 	}
-	
-	
+
+	// 수정
+	@RequestMapping(value = "/update_car", method = RequestMethod.GET)
+	public String updateCar(HttpServletRequest req, Model model) {
+
+		try {
+
+			initCarService().update(req);
+			model.addAttribute("msg", "수정이 완료되었습니다.");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			model.addAttribute("msg", "수정에 실패었습니다.");
+
+		}
+
+		return "msg";
+
+	}
+
+	// 삭제
+	@RequestMapping(value = "/delete_car", method = RequestMethod.GET)
+	public String deleteCar(HttpServletRequest req, Model model) {
+
+		try {
+
+			initCarService().delete(req);
+			model.addAttribute("msg", "삭제가 완료되었습니다.");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			model.addAttribute("msg", "삭제에 실패하였습니다.");
+
+		}
+
+		return "msg";
+
+	}
+
+	private CarService initCarService() {
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(MongoDbConfig.class);
+		CarService carService = (CarService) context.getBean("carService");
+		return carService;
+	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.secuve.vo.Car;
@@ -28,16 +29,18 @@ public class CarDaoImpl implements CarDao {
 	}
 
 	@Override
-	public void update(Car car) {
+	public void update(Query query, Update update) {
 
-		mongoTemplate.save(car);
+//		mongoTemplate.save(car);
+//		mongoTemplate.updateFirst(query, update, collectionName); //쿼리 조건에 맞는 정보 중 첫 번쨰 문서에만
+		mongoTemplate.updateMulti(query, update, COLLECTION); //쿼리 조건에 맞는 정보 중 모든 문서에만
 
 	}
 
 	@Override
-	public void delete(Car car) {
+	public void delete(Query query) {
 
-		mongoTemplate.remove(car);
+		mongoTemplate.remove(query, COLLECTION);
 
 	}
 
@@ -62,5 +65,6 @@ public class CarDaoImpl implements CarDao {
 		return (List<Car>) mongoTemplate.findAll(Car.class);
 		
 	}
+
 
 }
