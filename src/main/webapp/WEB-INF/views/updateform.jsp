@@ -9,7 +9,7 @@
 <title>수정페이지</title>
 </head>
 <body>
-<form id="car_form" action="./update_car">
+<form id="car_form" method="POST" action="./update_car">
 	
 	<table>
 			<tbody>

@@ -8,7 +8,7 @@
 <link href="./resources/common.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<form id="car_form" action="./insert_car">
+	<form id="car_form" method="post" action="./insert_car">
 		<table>
 			<tbody>
 				<tr>
@@ -28,7 +28,7 @@
 
 	</form>
 	
-<form action="./delete_all_car"><button type="submit">모두삭제</button></form>
+<form action="./delete_all_car" method="post" ><button type="submit">모두삭제</button></form>
 
 	<table >
 		<thead>
@@ -46,7 +46,7 @@
 					<td>${car.id}</td>
 					<td>${car.brand}</td>
 					<td>${car.model}</td>
-					<td><a href="./findOneCarData?id=${car.id}">수정</a></td>
+					<td><a href="./find_one_car?id=${car.id}">수정</a></td>
 					<td><a href="./delete_car?brand=${car.brand}&model=${car.model}">삭제</a></td>
 				</tr>
 			</c:forEach>

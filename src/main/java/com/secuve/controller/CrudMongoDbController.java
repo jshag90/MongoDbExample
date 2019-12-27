@@ -24,7 +24,7 @@ public class CrudMongoDbController {
 	private static final Logger logger = LoggerFactory.getLogger(CrudMongoDbController.class);
 
 	// 모두삭제
-	@RequestMapping(value = "/delete_all_car", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete_all_car", method = RequestMethod.POST)
 	public String allDelete(HttpServletRequest req, Model model) {
 		String page = "";
 		try {
@@ -40,7 +40,7 @@ public class CrudMongoDbController {
 	}
 
 	// 추가
-	@RequestMapping(value = "/insert_car", method = RequestMethod.GET)
+	@RequestMapping(value = "/insert_car", method = RequestMethod.POST)
 	public String saveCar(HttpServletRequest req, Model model) {
 
 		String page = "";
@@ -72,7 +72,7 @@ public class CrudMongoDbController {
 	}
 
 	// 하나만 조회
-	@RequestMapping(value = "/findOneCarData", method = RequestMethod.GET)
+	@RequestMapping(value = "/find_one_car", method = RequestMethod.GET)
 	public String findOneCarData(HttpServletRequest req, Model model) {
 
 		try {
@@ -88,7 +88,7 @@ public class CrudMongoDbController {
 	}
 
 	// 수정
-	@RequestMapping(value = "/update_car", method = RequestMethod.GET)
+	@RequestMapping(value = "/update_car", method = RequestMethod.POST)
 	public String updateCar(HttpServletRequest req, Model model) {
 
 		try {
