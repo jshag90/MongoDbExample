@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link href="./resources/common.css" rel="stylesheet" type="text/css" />
+<title>수정페이지</title>
 </head>
 <body>
 <form id="car_form" action="./update_car">

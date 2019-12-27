@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link href="./resources/common.css" rel="stylesheet" type="text/css"/>
+<title>처리결과</title>
 </head>
 <body>
 	${msg}

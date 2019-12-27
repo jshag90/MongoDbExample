@@ -4,7 +4,8 @@
 <%@ page session="false"%>
 <html>
 <head>
-<title>Home</title>
+<title>몽고DB CRUD 테스트 페이지</title>
+<link href="./resources/common.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<form id="car_form" action="./insert_car">
@@ -27,16 +28,16 @@
 
 	</form>
 	
-	<form action="./delete_all_car"><button type="submit">모두삭제</button></form>
-	
-	<br />
+<form action="./delete_all_car"><button type="submit">모두삭제</button></form>
 
-	<table>
+	<table >
 		<thead>
 			<tr>
 				<th>_id</th>
 				<th>브랜드</th>
 				<th>모델</th>
+				<th></th>
+				<th></th>
 			</tr>
 		<thead>
 		<tbody>
@@ -52,7 +53,8 @@
 
 		</tbody>
 
-	</table>
+	</table><br/>
+	
 
 </body>
 </html>
