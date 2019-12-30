@@ -47,7 +47,7 @@
 					<td>${car.brand}</td>
 					<td>${car.model}</td>
 					<td><a href="./find_one_car?id=${car.id}">수정</a></td>
-					<td><a href="./delete_car?brand=${car.brand}&model=${car.model}">삭제</a></td>
+					<td><a href="javascript:deleteCar('${car.brand}','${car.model}');">삭제</a></td>
 				</tr>
 			</c:forEach>
 
@@ -55,6 +55,36 @@
 
 	</table><br/>
 	
+	<script type="text/javascript">
+		function deleteCar(brand, model){
+			var form = document.createElement("form");
+
+			form.setAttribute("charset", "UTF-8");
+			form.setAttribute("method", "POST");
+			form.setAttribute("action", "./delete_car");
+			
+			var hiddenField = document.createElement("input");
+
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", "brand");
+			hiddenField.setAttribute("value", brand);
+
+			form.appendChild(hiddenField);
+			
+			hiddenField = document.createElement("input");
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", "model");
+			hiddenField.setAttribute("value", model);
+			form.appendChild(hiddenField);
+			
+			document.body.appendChild(form);
+			
+			form.submit();
+			
+		}
+	
+	</script>
 
 </body>
+
 </html>

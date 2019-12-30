@@ -26,7 +26,9 @@ public class CrudMongoDbController {
 	// 모두삭제
 	@RequestMapping(value = "/delete_all_car", method = RequestMethod.POST)
 	public String allDelete(HttpServletRequest req, Model model) {
+		
 		String page = "";
+		
 		try {
 			initCarService().deleteAll();
 			page = "redirect:/";
@@ -46,16 +48,12 @@ public class CrudMongoDbController {
 		String page = "";
 
 		try {
-			String brand = req.getParameter("brand");
-			String modelName = req.getParameter("model");
-
-			Car insertData = new Car(brand, modelName);
-			initCarService().create(insertData);
+			initCarService().create(req);
 			page = "redirect:/";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "등록에 실패하였습니다.");
-			page = "fail";
+			page = "msg";
 		}
 
 		return page;
@@ -65,8 +63,12 @@ public class CrudMongoDbController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 
-		List<Car> cars = initCarService().findAll();
-		model.addAttribute("CARS", cars);
+		try {
+			List<Car> cars = initCarService().findAll();
+			model.addAttribute("CARS", cars);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "home";
 
 	}
@@ -76,11 +78,10 @@ public class CrudMongoDbController {
 	public String findOneCarData(HttpServletRequest req, Model model) {
 
 		try {
-
 			Car getData = initCarService().find(req);
 			model.addAttribute("CAR", getData);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		return "updateform";
@@ -97,10 +98,8 @@ public class CrudMongoDbController {
 			model.addAttribute("msg", "수정이 완료되었습니다.");
 
 		} catch (Exception e) {
-
 			e.printStackTrace();
 			model.addAttribute("msg", "수정에 실패었습니다.");
-
 		}
 
 		return "msg";
@@ -108,7 +107,7 @@ public class CrudMongoDbController {
 	}
 
 	// 삭제
-	@RequestMapping(value = "/delete_car", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete_car", method = RequestMethod.POST)
 	public String deleteCar(HttpServletRequest req, Model model) {
 
 		try {
@@ -117,16 +116,15 @@ public class CrudMongoDbController {
 			model.addAttribute("msg", "삭제가 완료되었습니다.");
 
 		} catch (Exception e) {
-
 			e.printStackTrace();
 			model.addAttribute("msg", "삭제에 실패하였습니다.");
-
 		}
 
 		return "msg";
 
 	}
 
+	
 	private CarService initCarService() {
 		CarService carService = null;
 		

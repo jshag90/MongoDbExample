@@ -20,7 +20,13 @@ public class CarServiceImpl implements CarService {
 	CarDao carDao;
 
 	@Override
-	public void create(Car car) {
+	public void create(HttpServletRequest req) {
+		
+		String brand = req.getParameter("brand");
+		String modelName = req.getParameter("model");
+
+		Car car = new Car(brand, modelName);
+		
 		carDao.create(car);
 	}
 

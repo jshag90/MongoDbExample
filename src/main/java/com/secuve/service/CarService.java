@@ -11,7 +11,7 @@ import com.secuve.vo.Car;
 
 public interface CarService {
 
-	public void create(Car car);
+	public void create(HttpServletRequest req);
 
 	public void delete(HttpServletRequest req);
 
