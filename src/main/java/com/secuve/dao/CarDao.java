@@ -15,7 +15,7 @@ public interface CarDao {
 
 	public void deleteAll();
 
-	public Car find(Car car);
+	public Car find(Query query);
 
 	public List<Car> findAll();
 

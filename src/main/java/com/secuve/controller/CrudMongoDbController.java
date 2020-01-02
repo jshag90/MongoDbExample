@@ -26,9 +26,9 @@ public class CrudMongoDbController {
 	// 모두삭제
 	@RequestMapping(value = "/delete_all_car", method = RequestMethod.POST)
 	public String allDelete(HttpServletRequest req, Model model) {
-		
+
 		String page = "";
-		
+
 		try {
 			initCarService().deleteAll();
 			page = "redirect:/";
@@ -124,10 +124,9 @@ public class CrudMongoDbController {
 
 	}
 
-	
 	private CarService initCarService() {
 		CarService carService = null;
-		
+
 		try {
 			AbstractApplicationContext context = new AnnotationConfigApplicationContext(MongoDbConfig.class);
 			carService = (CarService) context.getBean("carService");

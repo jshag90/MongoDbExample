@@ -8,6 +8,7 @@
 <link href="./resources/common.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+
 	<form id="car_form" method="post" action="./insert_car">
 		<table>
 			<tbody>
@@ -82,7 +83,6 @@
 			form.submit();
 			
 		}
-	
 	</script>
 
 </body>

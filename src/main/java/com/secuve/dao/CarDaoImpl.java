@@ -52,9 +52,8 @@ public class CarDaoImpl implements CarDao {
 	}
 
 	@Override
-	public Car find(Car car) {
+	public Car find(Query query) {
 		
-		Query query = new Query(Criteria.where("_id").is(car.getId()));
 		return mongoTemplate.findOne(query, Car.class, COLLECTION);
 		
 	}

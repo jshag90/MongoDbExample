@@ -84,7 +84,9 @@ public class CarServiceImpl implements CarService {
 		Car car = new Car("", "");
 		car.setId(getId);
 		
-		return carDao.find(car);
+		Query query = new Query(Criteria.where("_id").is(car.getId()));
+		
+		return carDao.find(query);
 	}
 
 	@Override
