@@ -7,14 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.secuve.configuration.MongoDbConfig;
 import com.secuve.service.CarService;
 import com.secuve.vo.Car;
 
@@ -23,6 +21,9 @@ public class CrudMongoDbController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CrudMongoDbController.class);
 
+	@Autowired
+	CarService carService;
+	
 	// 모두삭제
 	@RequestMapping(value = "/delete_all_car", method = RequestMethod.POST)
 	public String allDelete(HttpServletRequest req, Model model) {
@@ -30,7 +31,7 @@ public class CrudMongoDbController {
 		String page = "";
 
 		try {
-			initCarService().deleteAll();
+			carService.deleteAll();
 			page = "redirect:/";
 		} catch (Exception e) {
 			model.addAttribute("msg", "삭제에 실패하였습니다.");
@@ -48,7 +49,7 @@ public class CrudMongoDbController {
 		String page = "";
 
 		try {
-			initCarService().create(req);
+			carService.create(req);
 			page = "redirect:/";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,7 +65,7 @@ public class CrudMongoDbController {
 	public String home(Locale locale, Model model) {
 
 		try {
-			List<Car> cars = initCarService().findAll();
+			List<Car> cars = carService.findAll();
 			model.addAttribute("CARS", cars);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,7 +79,7 @@ public class CrudMongoDbController {
 	public String findOneCarData(HttpServletRequest req, Model model) {
 
 		try {
-			Car getData = initCarService().find(req);
+			Car getData = carService.find(req);
 			model.addAttribute("CAR", getData);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +95,7 @@ public class CrudMongoDbController {
 
 		try {
 
-			initCarService().update(req);
+			carService.update(req);
 			model.addAttribute("msg", "수정이 완료되었습니다.");
 
 		} catch (Exception e) {
@@ -111,8 +112,8 @@ public class CrudMongoDbController {
 	public String deleteCar(HttpServletRequest req, Model model) {
 
 		try {
-
-			initCarService().delete(req);
+			
+			carService.delete(req);
 			model.addAttribute("msg", "삭제가 완료되었습니다.");
 
 		} catch (Exception e) {
@@ -124,17 +125,5 @@ public class CrudMongoDbController {
 
 	}
 
-	private CarService initCarService() {
-		CarService carService = null;
-
-		try {
-			AbstractApplicationContext context = new AnnotationConfigApplicationContext(MongoDbConfig.class);
-			carService = (CarService) context.getBean("carService");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return carService;
-	}
 
 }
